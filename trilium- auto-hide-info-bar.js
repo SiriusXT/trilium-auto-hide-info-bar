@@ -1,7 +1,7 @@
 /*
 trilium-auto-hide-info-bar
 https://github.com/SiriusXT/trilium-auto-hide-info-bar
-version:0.1
+version:0.1.1
 */
 var hidden_title = true; //true:hidden false:display
 var hidden_ribbon = true; //true:hidden false:display
@@ -9,6 +9,7 @@ var pin_ribbon_title = false; //hidden by default
 var delay_execution_time = 100 //Delay execution time when the mouse is moved in, default:100ms
 if (!hidden_title && !hidden_ribbon) { return }
 var pinButton = function () {
+    console.log('pin_ribbon_title',pin_ribbon_title);
     pin_ribbon_title = !pin_ribbon_title;
     if (pin_ribbon_title) {
         $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');
@@ -45,7 +46,7 @@ function hidden() {
     }
 }
 
-var inTab = false;
+var inTab=false;
 class hiddenRibbon extends api.NoteContextAwareWidget {
     get parentWidget() {
         return 'center-pane';
@@ -74,11 +75,10 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
 	<span  class="hidden-ribbon-pin ribbon-tab-title-icon bx hidden" title="Pin Ribbon Tab Title"></span>
 </div>`);
             }
-            $('div.hidden-ribbon-pin.ribbon-tab-title').click(function () {
-                pinButton();
-            });
-
-            if (!pin_ribbon_title && !inTab) {
+            $('div.component.note-split:not(.hidden-ext) div.hidden-ribbon-pin.ribbon-tab-title').off("click", pinButton);
+            $('div.component.note-split:not(.hidden-ext) div.hidden-ribbon-pin.ribbon-tab-title').on("click", pinButton);
+            
+            if (!pin_ribbon_title ) {
                 hidden();
                 $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('pin').addClass('hidden');
             }
@@ -87,29 +87,33 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                 display();
                 $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');
             }
+            console.log(inTab);
+            if(inTab){
+                display();
+            }
 
-            var timeoutEnter, timeoutLeave;
+            var timeoutEnter,timeoutLeave;
             $("div.component.note-split:not(.hidden-ext) div.component.scrolling-container").mouseenter(function () {
-                clearTimeout(timeoutEnter);
+                clearTimeout(timeoutEnter); 
                 clearTimeout(timeoutLeave);
                 timeoutEnter = setTimeout(function () {
                     if (!pin_ribbon_title) {
-                        hidden();
-                        inTab = false;
-                    }
-                }, delay_execution_time);
+                    hidden();
+                    inTab=false;    
+                }
+                }, delay_execution_time); 
             }).mouseleave(function (event) {
-                clearTimeout(timeoutEnter);
+                clearTimeout(timeoutEnter); 
                 clearTimeout(timeoutLeave);
                 if (event.pageY < $(this).offset().top) {
                     timeoutLeave = setTimeout(function () {
                         display();
-                        inTab = true;
-                    }, delay_execution_time);
+                        inTab=true;
+                    },delay_execution_time);
                 }
             });
-
-
+                
+                
         });
     }
 
