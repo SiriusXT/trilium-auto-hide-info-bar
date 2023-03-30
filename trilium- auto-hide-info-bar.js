@@ -45,7 +45,7 @@ function hidden() {
     }
 }
 
-var inTab=false;
+var inTab = false;
 class hiddenRibbon extends api.NoteContextAwareWidget {
     get parentWidget() {
         return 'center-pane';
@@ -77,7 +77,7 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
             $('div.hidden-ribbon-pin.ribbon-tab-title').click(function () {
                 pinButton();
             });
-            
+
             if (!pin_ribbon_title && !inTab) {
                 hidden();
                 $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('pin').addClass('hidden');
@@ -88,28 +88,28 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                 $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');
             }
 
-            var timeoutEnter,timeoutLeave;
+            var timeoutEnter, timeoutLeave;
             $("div.component.note-split:not(.hidden-ext) div.component.scrolling-container").mouseenter(function () {
-                clearTimeout(timeoutEnter); 
+                clearTimeout(timeoutEnter);
                 clearTimeout(timeoutLeave);
                 timeoutEnter = setTimeout(function () {
                     if (!pin_ribbon_title) {
-                    hidden();
-                    inTab=false;    
-                }
-                }, delay_execution_time); 
+                        hidden();
+                        inTab = false;
+                    }
+                }, delay_execution_time);
             }).mouseleave(function (event) {
-                clearTimeout(timeoutEnter); 
+                clearTimeout(timeoutEnter);
                 clearTimeout(timeoutLeave);
                 if (event.pageY < $(this).offset().top) {
                     timeoutLeave = setTimeout(function () {
                         display();
-                        inTab=true;
-                    },delay_execution_time);
+                        inTab = true;
+                    }, delay_execution_time);
                 }
             });
-                
-                
+
+
         });
     }
 
