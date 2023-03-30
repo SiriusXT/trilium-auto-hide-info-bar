@@ -1,8 +1,12 @@
-
+/*
+trilium-auto-hide-info-bar
+https://github.com/SiriusXT/trilium-auto-hide-info-bar
+version:0.1
+*/
 var hidden_title = true; //true:hidden false:display
 var hidden_ribbon = true; //true:hidden false:display
 var pin_ribbon_title = false; //hidden by default
-var delay_execution_time = 300 //Delay execution time when the mouse is moved in, default:300ms
+var delay_execution_time = 100 //Delay execution time when the mouse is moved in, default:100ms
 if (!hidden_title && !hidden_ribbon) { return }
 var pinButton = function () {
     pin_ribbon_title = !pin_ribbon_title;
