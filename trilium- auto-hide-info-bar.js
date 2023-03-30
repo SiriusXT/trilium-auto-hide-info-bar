@@ -44,6 +44,8 @@ function hidden() {
         $('div#rest-pane.component div.tab-row-widget.component').css('border-bottom', '1px solid var(--main-border-color)');
     }
 }
+
+var inTab=false;
 class hiddenRibbon extends api.NoteContextAwareWidget {
     get parentWidget() {
         return 'center-pane';
@@ -75,8 +77,8 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
             $('div.hidden-ribbon-pin.ribbon-tab-title').click(function () {
                 pinButton();
             });
-
-            if (!pin_ribbon_title) {
+            
+            if (!pin_ribbon_title && !inTab) {
                 hidden();
                 $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('pin').addClass('hidden');
             }
@@ -93,6 +95,7 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                 timeoutEnter = setTimeout(function () {
                     if (!pin_ribbon_title) {
                     hidden();
+                    inTab=false;    
                 }
                 }, delay_execution_time); 
             }).mouseleave(function (event) {
@@ -101,6 +104,7 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                 if (event.pageY < $(this).offset().top) {
                     timeoutLeave = setTimeout(function () {
                         display();
+                        inTab=true;
                     },delay_execution_time);
                 }
             });
