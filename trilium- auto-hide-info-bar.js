@@ -9,7 +9,6 @@ var pin_ribbon_title = false; //hidden by default
 var delay_execution_time = 100 //Delay execution time when the mouse is moved in, default:100ms
 if (!hidden_title && !hidden_ribbon) { return }
 var pinButton = function () {
-    console.log('pin_ribbon_title',pin_ribbon_title);
     pin_ribbon_title = !pin_ribbon_title;
     if (pin_ribbon_title) {
         $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');
@@ -87,7 +86,6 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                 display();
                 $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');
             }
-            console.log(inTab);
             if(inTab){
                 display();
             }
