@@ -1,12 +1,13 @@
 /*
 trilium-auto-hide-info-bar
 https://github.com/SiriusXT/trilium-auto-hide-info-bar
-version:0.1.1
+version:0.2
 */
+
 var hidden_title = true; //true:hidden false:display
 var hidden_ribbon = true; //true:hidden false:display
 var pin_ribbon_title = false; //hidden by default
-var delay_execution_time = 100 //Delay execution time when the mouse is moved in, default:100ms
+var delay_execution_time = 100 //The event that the mouse needs to stay when the mouse moves in, default:100ms
 if (!hidden_title && !hidden_ribbon) { return }
 var pinButton = function () {
     pin_ribbon_title = !pin_ribbon_title;
@@ -19,6 +20,7 @@ var pinButton = function () {
 function display() {
     if (hidden_ribbon) {
         $('div.component.note-split:not(.hidden-ext) div.ribbon-container.component').css('display', 'block');
+        $('div.component.note-split:not(.hidden-ext) div.shared-info-widget.alert.alert-warning.component').css('display', 'block');
     }
     if (hidden_title) {
         $('div.component.note-split:not(.hidden-ext) div.component.title-row').css('display', 'flex');
@@ -33,6 +35,7 @@ function display() {
 function hidden() {
     if (hidden_ribbon) {
         $('div.component.note-split:not(.hidden-ext) div.ribbon-container.component').css('display', 'none');
+        $('div.component.note-split:not(.hidden-ext) div.shared-info-widget.alert.alert-warning.component').css('display', 'none');
     }
     if (hidden_title) {
         $('div.component.note-split:not(.hidden-ext) div.component.title-row').css('display', 'none');
@@ -56,8 +59,7 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
 		content: "\\ebbb";
 	}
     .hidden-ribbon-pin.ribbon-tab-title-icon.bx.pin::before {
-		content: "\\ebbb";
-        color: var(--main-text-color);
+		content: "\\ee70";
 	}
 </style>`);
         return this.$widget;
