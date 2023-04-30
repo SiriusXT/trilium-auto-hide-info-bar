@@ -1,12 +1,12 @@
 /*
 trilium-auto-hide-info-bar
 https://github.com/SiriusXT/trilium-auto-hide-info-bar
-version:0.3
+version:0.4
 */
 
 var hidden_title = true; //true:hidden false:display
 var hidden_ribbon = true; //true:hidden false:display
-var pin_ribbon_title = false; //hidden by default
+var pin_ribbon_title = true; //hidden by default
 var delay_execution_time = 300 //The event that the mouse needs to stay when the mouse moves in, default:100ms
 if (!hidden_title && !hidden_ribbon) { return }
 var pinButton = function () {
@@ -17,6 +17,11 @@ var pinButton = function () {
         $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('pin').addClass('hidden');
     }
 };
+if (pin_ribbon_title){
+    $(document).ready(function () {
+        setTimeout(function () { $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');},500);
+    });
+}
 function display() {
     if (hidden_ribbon) {
         $('div.component.note-split:not(.hidden-ext) div.ribbon-container.component').css('display', 'block');
