@@ -17,11 +17,7 @@ var pinButton = function () {
         $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('pin').addClass('hidden');
     }
 };
-if (pin_ribbon_title){
-    $(document).ready(function () {
-        setTimeout(function () { $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');},500);
-    });
-}
+ 
 function display() {
     if (hidden_ribbon) {
         $('div.component.note-split:not(.hidden-ext) div.ribbon-container.component').css('display', 'block');
@@ -53,7 +49,6 @@ function hidden() {
     }
 }
 
-var inTab=false;
 class hiddenRibbon extends api.NoteContextAwareWidget {
     
     get parentWidget() {
@@ -72,11 +67,7 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
     }
 
     async refreshWithNote(note) {
-        /*if (!pin_ribbon_title) {
-            hidden();
-        }   */     
-        $(document).ready(function () {
-             
+        $(document).ready(function () {            
             if (!$("div.component.note-split:not(.hidden-ext) div.ribbon-tab-title").hasClass('hidden-ribbon-pin')) {
                 $("div.component.note-split:not(.hidden-ext) .ribbon-tab-title:not(.backToHis)").last().after(`<div class="hidden-ribbon-pin ribbon-tab-spacer" ></div>
 <div  class="hidden-ribbon-pin ribbon-tab-title" >
@@ -85,19 +76,9 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
             }
             $('div.component.note-split:not(.hidden-ext) div.hidden-ribbon-pin.ribbon-tab-title').off("click", pinButton);
             $('div.component.note-split:not(.hidden-ext) div.hidden-ribbon-pin.ribbon-tab-title').on("click", pinButton);
-            
-            /*if (!pin_ribbon_title ) {
-                hidden();
-                $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('pin').addClass('hidden');
-            }
-
-            else {
-                display();
+            if (pin_ribbon_title==true){
                 $('.hidden-ribbon-pin.ribbon-tab-title-icon.bx').removeClass('hidden').addClass('pin');
             }
-            if(inTab){
-                display();
-            }*/
             display();
             var timeoutEnter,timeoutLeave;
             $("div.component.note-split:not(.hidden-ext) div.component.scrolling-container").mouseenter(function () {
@@ -105,8 +86,7 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                 clearTimeout(timeoutLeave);
                 timeoutEnter = setTimeout(function () {
                     if (!pin_ribbon_title) {
-                    hidden();
-                    inTab=false;    
+                    hidden(); 
                 }
                 }, delay_execution_time); 
             }).mouseleave(function (event) {
@@ -115,12 +95,10 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                 if (event.pageY < $(this).offset().top) {
                     timeoutLeave = setTimeout(function () {
                         display();
-                        inTab=true;
                     },delay_execution_time);
                 }
             });
-                
-                
+          
         });
     }
 
