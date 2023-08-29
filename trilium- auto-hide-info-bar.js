@@ -1,13 +1,16 @@
 /*
 trilium-auto-hide-info-bar
 https://github.com/SiriusXT/trilium-auto-hide-info-bar
-version:0.4
+version:0.5
 */
-
 var hidden_title = true; //true:hidden false:display
 var hidden_ribbon = true; //true:hidden false:display
 var pin_ribbon_title = false; //hidden by default
 var delay_execution_time = 300 //The event that the mouse needs to stay when the mouse moves in, default:100ms
+
+
+
+
 if (!hidden_title && !hidden_ribbon) { return }
 var pinButton = function () {
     pin_ribbon_title = !pin_ribbon_title;
@@ -45,7 +48,7 @@ function hidden() {
         $('div.component.note-split:not(.hidden-ext) div.component.title-row').css('border-bottom', '1px solid var(--main-border-color)');
     }
     if (hidden_title && hidden_ribbon) {
-        $('div#rest-pane.component div.tab-row-widget.component').css('border-bottom', '1px solid var(--main-border-color)');
+        $('div#rest-pane.component div.tab-row-widget.component').css('border-bottom', '0px solid var(--main-border-color)');//1px
     }
 }
 
@@ -89,14 +92,27 @@ class hiddenRibbon extends api.NoteContextAwareWidget {
                     hidden(); 
                 }
                 }, delay_execution_time); 
-            }).mouseleave(function (event) {
+            })
+            $('div.component.note-split:not(.hidden-ext) div.component.title-row').mouseenter(function (event) {
                 clearTimeout(timeoutEnter); 
                 clearTimeout(timeoutLeave);
-                if (event.pageY < $(this).offset().top) {
-                    timeoutLeave = setTimeout(function () {
+                timeoutLeave = setTimeout(function () {
                         display();
                     },delay_execution_time);
-                }
+            });
+            $('div.tab-row-widget.component').mouseenter(function (event) {
+                clearTimeout(timeoutEnter); 
+                clearTimeout(timeoutLeave);
+                timeoutLeave = setTimeout(function () {
+                        display();
+                    },delay_execution_time);
+            });
+            $('div.component.note-split:not(.hidden-ext) div.ribbon-container.component').mouseenter(function (event) {
+                clearTimeout(timeoutEnter); 
+                clearTimeout(timeoutLeave);
+                timeoutLeave = setTimeout(function () {
+                        display();
+                    },delay_execution_time);
             });
           
         });
